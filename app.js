@@ -1,76 +1,88 @@
+// Paso 1: Inicializar los arrays
+// Usaremos estos arrays para manejar los datos
 let participantes = [];
-let resultadosSorteo = new Map();
+let nombresDisponibles = [];
 
-function agregarAmigo() {
-    let inputAmigo = document.getElementById('amigo');
-    let nombre = inputAmigo.value.trim();
+// Paso 2: Función para agregar un participante
+// Esta función se llama cada vez que se presiona el botón "Agregar"
+function agregarParticipante() {
+    let input = document.getElementById('nombreParticipante');
+    let nombreCompleto = input.value.trim(); // Obtiene el valor y elimina espacios en blanco
 
-    if (nombre === '') {
-        alert('Por favor, ingresa un nombre y apellido.');
+    // Valida que el campo no esté vacío
+    if (nombreCompleto === "") {
+        alert("Por favor, ingresa un nombre y apellido.");
         return;
     }
 
-    if (participantes.includes(nombre)) {
-        alert('Este nombre ya ha sido agregado.');
-        return;
-    }
+    // Agrega el nuevo participante a la lista principal
+    participantes.push({ nombreCompleto: nombreCompleto, amigoSecreto: null });
+    
+    // Agrega el nombre a la lista de nombres disponibles para el sorteo
+    nombresDisponibles.push(nombreCompleto);
 
-    participantes.push(nombre);
-    inputAmigo.value = '';
-    mostrarAmigos();
+    // Muestra la lista actualizada en la página
+    mostrarParticipantesEnLista();
+    
+    // Limpia el campo de texto para el siguiente nombre
+    input.value = "";
 }
 
-function mostrarAmigos() {
-    let listaHTML = document.getElementById('listaAmigos');
-    listaHTML.textContent = '';
+// Función para mostrar la lista de participantes en el HTML
+function mostrarParticipantesEnLista() {
+    let listaHTML = document.getElementById('listaParticipantes');
+    listaHTML.innerHTML = ""; // Limpia la lista antes de volver a llenarla
     
-    participantes.forEach(amigo => {
+    participantes.forEach(p => {
         let li = document.createElement('li');
-        li.textContent = amigo;
+        li.textContent = p.nombreCompleto;
         listaHTML.appendChild(li);
     });
 }
 
-function sortearAmigo() {
-    // Si el sorteo no ha sido preparado, lo hacemos ahora.
-    if (resultadosSorteo.size === 0) {
-        if (participantes.length < 2) {
-            alert('Necesitas al menos dos amigos para el sorteo.');
-            return;
-        }
-
-        // Realizamos el sorteo completo y válido en el fondo
-        let nombresDisponibles = [...participantes];
-        nombresDisponibles.sort(() => Math.random() - 0.5);
-
-        for (let i = 0; i < participantes.length; i++) {
-            if (participantes[i] === nombresDisponibles[i]) {
-                console.log("Pre-sorteo fallido, reiniciando...");
-                return sortearAmigo(); // Reinicia si alguien se eligió a sí mismo
-            }
-            resultadosSorteo.set(participantes[i], nombresDisponibles[i]);
-        }
-        
-        document.getElementById('resultado').innerHTML = '<p>¡Sorteo listo! Ahora cada persona puede sortear su nombre.</p>';
+// Paso 3: Función para realizar el sorteo
+// Esta función se llama cuando se presiona el botón "Realizar Sorteo"
+function realizarSorteo() {
+    // Valida que haya al menos dos participantes para el sorteo
+    if (participantes.length < 2) {
+        alert("Debes agregar al menos dos participantes para el sorteo.");
         return;
     }
 
-    // Si el sorteo ya está preparado, cada persona puede ver su resultado.
-    let miNombre = prompt("Ingresa tu nombre para ver tu amigo secreto:");
-    
-    if (resultadosSorteo.has(miNombre)) {
-        let amigoSecreto = resultadosSorteo.get(miNombre);
-        document.getElementById('resultado').innerHTML = `<p>${miNombre} le regala a --> ${amigoSecreto}</p>`;
-        resultadosSorteo.delete(miNombre);
-    } else {
-        alert('Tu nombre no se encuentra en la lista o ya has visto a tu amigo secreto.');
-    }
+    // Copia de los nombres disponibles para el sorteo de cada persona
+    let nombresParaSortear = [...nombresDisponibles];
+
+    // Recorre cada participante y asigna un amigo secreto
+    participantes.forEach(p => {
+        let opcionesDeSorteo = nombresParaSortear.filter(nombre => nombre !== p.nombreCompleto);
+        
+        // Si ya no hay opciones, podría haber un problema de asignación
+        if (opcionesDeSorteo.length === 0) {
+            alert("Hubo un problema con la asignación. Reinicia el sorteo.");
+            return;
+        }
+
+        let indiceAleatorio = Math.floor(Math.random() * opcionesDeSorteo.length);
+        let amigoSecretoElegido = opcionesDeSorteo[indiceAleatorio];
+
+        p.amigoSecreto = amigoSecretoElegido;
+
+        // Elimina el nombre del sorteado de la lista de opciones para el siguiente participante
+        nombresParaSortear = nombresParaSortear.filter(nombre => nombre !== amigoSecretoElegido);
+    });
+
+    // Muestra los resultados en la página web
+    mostrarResultadosEnPagina();
 }
 
-function reiniciar() {
-    participantes = [];
-    resultadosSorteo.clear();
-    document.getElementById('amigo').value = '';
-    document.getElementById('listaAmigos').textContent = '';
-    document.getElementById('resultado').innerHTML = '';
+// Función para mostrar los resultados en la página
+function mostrarResultadosEnPagina() {
+    let resultadosHTML = document.getElementById('resultadoSorteo');
+    resultadosHTML.innerHTML = ""; // Limpia el área antes de mostrar los nuevos resultados
+
+    participantes.forEach(p => {
+        let pElement = document.createElement('p');
+        pElement.textContent = `${p.nombreCompleto} le regala a --> ${p.amigoSecreto}`;
+        resultadosHTML.appendChild(pElement);
+    });
 }
