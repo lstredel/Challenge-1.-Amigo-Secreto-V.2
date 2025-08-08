@@ -12,4 +12,6 @@ Una vez que estuvieran todos los nombres de los particantes dentro del recipient
 
 A traves del CHALLENGE AMIGO SECRETO, se hara una analogia de forma tecnologica de todos los pasos del juego.
 
-1.- Introducir 
+1.- El Organizador introducira Nombres y Apellidos de los participantes, esto sustituira el papelito
+
+
