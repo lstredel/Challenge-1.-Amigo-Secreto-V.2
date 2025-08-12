@@ -1,17 +1,58 @@
 # Challenge Amigo Secreto. Curso Alura Latam
 
-# Voy a relatar un pequeño cuento sobre mi niñez y el juego de AMIGO SECRETO.
+# 🎁 Amigo Secreto V2 - El Challenge
 
-Antes de la llegada masiva de la tecnologia y las APPS, el juego de AMIGO SECRETO se realizaba enmarcado dentro de las actividades decembrinas en mi querida Venezuela.
+Este es un juego interactivo para sortear un "Amigo Secreto" entre un grupo de participantes. El proyecto fue desarrollado como parte de un curso de programación, aplicando conceptos de lógica, estructura web y diseño.
 
-En aquellos años, se anotaban en un pedacito de papel los nombres y apellidos de todos los participantes, estos papelitos se doblaban y se introducian dentro de un bowl, sombrero, gorra o cualquier recipiente donde cupieran.
+## 🌟 Características Principales
 
-Una vez que estuvieran todos los nombres de los particantes dentro del recipiente, empezaba el sorteo del AMIGO SECRETO, este sorteo consistia en que cada participante tomara un papelito, lo abriera, leyera para si mismo el nombre en él escrito (por supuesto sin que nadie lo escuche porque es secreto) y en nochebuena se hacia la entrega del regalo al AMIGO SECRETO que te tocó en el sorteo.
+Juego Interactivo: Permite a los usuarios agregar nombres y sortear un amigo secreto de forma aleatoria.
 
-# Analogia
+Diseño Moderno: Interfaz visualmente atractiva, diseñada con CSS moderno y colores vibrantes.
 
-A traves del CHALLENGE AMIGO SECRETO, se hara una analogia de forma tecnologica de todos los pasos del juego.
+Validaciones Robustas: Evita nombres duplicados, comprueba la longitud de los nombres y valida la cantidad de participantes antes del sorteo.
 
-1.- El Organizador introducira Nombres y Apellidos de los participantes, esto sustituira el papelito
+Efectos Visuales: Incluye una animación de confeti para celebrar al amigo sorteado, mejorando la experiencia del usuario.
+
+Persistencia de Datos: Los nombres cargados y sorteados se guardan automáticamente en el navegador, para que la lista no se borre al recargar la página.
+
+## ⚙️Tecnologías Utilizadas
+HTML5: Para la estructura y el contenido de la página.
+
+CSS3: Para el diseño, los estilos y la disposición de los elementos.
+
+JavaScript: Para la lógica del juego y la interacción del usuario.
+
+## 🔧 Funciones del Código
+
+El código JavaScript está organizado en varias funciones, cada una con una responsabilidad específica:
+
+agregar(): Agrega un nuevo nombre a la lista de participantes, aplicando diversas validaciones.
+
+sortear(): Es la función principal que ejecuta la lógica del sorteo, elige un ganador, lo mueve a la lista de sorteados y activa el confeti.
+
+reiniciar(): Restablece el juego, vaciando las listas de participantes y sorteados.
+
+guardarDatos(): Se encarga de guardar el estado de las listas en la memoria del navegador (localStorage).
+
+window.onload: Carga los datos guardados del navegador al iniciar la página para recuperar el estado del juego.
+
+## 🚀 Cómo Jugar
+
+Abre el archivo index.html en tu navegador web.
+
+Escribe el nombre de un participante en el campo de texto y haz clic en "Añadir".
+
+Repite el proceso hasta tener a todos los participantes en la lista.
+
+Haz clic en "Sortear Amigo" para elegir al azar a uno de los participantes.
+
+Haz clic en "Reiniciar" para vaciar las listas y empezar un nuevo juego.
+
+## 📸 Vista Previa
+
+<img width="2553" height="1255" alt="image" src="https://github.com/user-attachments/assets/cbd8349d-b15a-4cf9-a213-4cb9c72fc861" />
 
 
+## 📝 Licencia
+Este proyecto está bajo la Licencia MIT.
